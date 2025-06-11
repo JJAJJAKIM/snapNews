@@ -30,7 +30,7 @@ public class ArticleRepository {
     }
 
     public boolean existsByUrl(String url) {
-        Long count = em.createQuery("select a from Article a where a.url = :url", Long.class)
+        Long count = em.createQuery("select count(a) from Article a where a.url = :url", Long.class)
                 .setParameter("url", url)
                 .getSingleResult();
         return count > 0;

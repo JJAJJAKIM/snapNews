@@ -22,7 +22,7 @@ public class Article {
 
     private String title;
 
-    @Column(length = 10000)
+    @Column(length = 20000)
     private String content;
 
     private String url;

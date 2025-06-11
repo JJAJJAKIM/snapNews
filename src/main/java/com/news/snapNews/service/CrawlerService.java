@@ -20,7 +20,7 @@ public class CrawlerService {
     public void crawlAll() {
         for (CrawlerSource source : sources) {
             List<Article> articles = source.crawl();
-
+            System.out.println("[크롤링된 기사 갯수] : " + articles.size());
             for (Article article : articles) {
                 // 중복 기사 방지
                 if(!articleRepository.existsByUrl(article.getUrl())) {
