@@ -11,7 +11,7 @@ public class SummaryScheduler {
 
     private final CrawlerService crawlerService;
 
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(cron = "0 0 * * * *")
     public void scheduleCrawling() {
         System.out.println("[스케줄러] 크롤링 시작");
         crawlerService.crawlAll();

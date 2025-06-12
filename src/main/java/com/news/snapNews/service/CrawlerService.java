@@ -15,16 +15,21 @@ public class CrawlerService {
 
     private final List<CrawlerSource> sources;
     private final ArticleRepository articleRepository;
+    private final HuggingFaceSummaryService huggingFaceSummaryService;
 
     @Transactional
     public void crawlAll() {
         for (CrawlerSource source : sources) {
             List<Article> articles = source.crawl();
-            System.out.println("[크롤링된 기사 갯수] : " + articles.size());
             for (Article article : articles) {
                 // 중복 기사 방지
                 if(!articleRepository.existsByUrl(article.getUrl())) {
-                    articleRepository.save(article);
+                    String content = article.getContent();
+                    if (content != null && !content.isBlank()) {
+                        String summary = huggingFaceSummaryService.summarize(content);
+                        articleRepository.save(article);
+
+                    }
                 }
             }
         }
